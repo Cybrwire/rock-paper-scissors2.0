@@ -1,3 +1,9 @@
+let playerScoreDisplay = document.querySelector('#player-score');
+let enemyScoreDisplay = document.querySelector('#enemy-score');
+let userWinCounter = 0;
+let comWinCounter = 0;
+let textWindow = document.querySelector('.game-text-window');
+
 //generate comchoice
 function getComChoice(){
     let num = Math.floor(Math.random()*3);
@@ -10,77 +16,91 @@ function getComChoice(){
             return 'scissors';
     }
 }
-//get user choice
 function getUserChoice(){
-    return prompt('Please enter: rock, paper, or scissors').toLowerCase();
-}
 
+}
 // compare the two and decide result
 function playRound(com, user){
+    
+    let result = "";
     switch(com){
         case 'rock':
             if(user === 'rock'){
-                return 'Tie';
+                result = "Tie!";
             }
-            if(user === 'paper'){
-                return 'Win';
+            else if(user === 'paper'){
+                userWinCounter++;
+                result = "You win round!";
             }
-            if(user === 'scissors'){
-                return 'Loss';
+            else if(user === 'scissors'){
+                comWinCounter++;
+                result = "Com wins round!";
             }
+            break;
         case 'paper':
             if(user === 'rock'){
-                return 'Loss';
+                comWinCounter++;
+                result = "Com wins round!";
             }
-            if(user === 'paper'){
-                return 'Tie';
+            else if(user === 'paper'){
+                result = "Tie!";
             }
-            if(user === 'scissors'){
-                return 'Win';
+            else if (user === 'scissors'){
+                userWinCounter++;
+                result = "You win round!";
             }
+            break;
         case 'scissors':
             if(user === 'rock'){
-                return 'Win';
-            }
-            if(user === 'paper'){
-                return 'Loss';
-            }
-            if(user === 'scissors'){
-                return 'Tie';
-            }
-    }
-}
-function game(){
-    let comWinCounter = 0;
-    let userWinCounter = 0;
-
-    for(i = 0; i <5;i++){
-        switch(playRound(getComChoice(), getUserChoice())){
-            case 'Win':
                 userWinCounter++;
-                console.log("User point");
-                break;
-            case 'Loss':
+                result = "You win round!";
+            }
+            else if(user === 'paper'){
                 comWinCounter++;
-                console.log("Com point");
-                break;
-            case 'Tie':
-                console.log("Tie");
-                break;
-        }
+                result = 'Com wins round!';
+            }
+            else if(user === 'scissors'){
+                result = 'Tie!';
+            }
+            break;
     }
-    console.log('User:' + userWinCounter);
-    console.log('Com:' + comWinCounter);
+
+    textWindow.textContent = result;
+    playerScoreDisplay.textContent = userWinCounter;
+    enemyScoreDisplay.textContent = comWinCounter;
+    checkWinner();
+
+}
+function gameSetup(){
     
-    if(userWinCounter > comWinCounter){
-        console.log('You win!');
+    let buttons = document.querySelectorAll('.button-wrapper > button');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            playRound(getComChoice(), e.target.id)
+        })
+    })
+
+    
+}
+function checkWinner(){
+    let gameButtons = document.querySelectorAll('.button-wrapper > button');
+
+    if (comWinCounter == 5){
+        textWindow.textContent = "Com wins! You suck!";
+        
+        gameButtons.forEach(button => {
+            button.disabled = true;
+        })
     }
-    if(userWinCounter < comWinCounter){
-        console.log('You lose!');
-    }
-    if(userWinCounter == comWinCounter){
-        console.log('It\'s a tie!');
+    else if (userWinCounter == 5){
+        textWindow.textContent = "You win! Com sucks!";
+        gameButtons.forEach(button => {
+            button.disabled = true;
+        })
     }
     
 }
-game();
+
+    
+gameSetup();

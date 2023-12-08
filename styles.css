@@ -1,31 +1,12 @@
-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100dvh;
-    margin: 0;
-    padding: 0;
-    background: repeating-linear-gradient(
-        45deg,
-        yellow,
-        yellow 40px,
-        black 40px,
-        black 90px
-    );
+.button-wrapper{
+    width: 15rem;
+    margin: 0 auto;
 }
-div{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 50%;
-    width: 100%;
-    background-color: yellow;
-    height: 50%;
-    color: black;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    text-decoration: underline;
-    font-weight: bolder;
-    font-size: 6rem;
-    
+.button-wrapper > button {
+    width: 4rem;
+    height: 2rem;
+}
+.game-text-window{
+    position: absolute;
+    bottom: 0;
 }
